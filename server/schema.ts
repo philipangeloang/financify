@@ -95,3 +95,9 @@ export const typeDefs = `#graphql
         subjectId: String!
     }
 `;
+
+// No Password Login System
+// Categories for Income and Expense
+// Type of Accounts where the income or expensea will be pushed or derived from
+// Derived values from the root elements
+// Graphs leveraging all the data
