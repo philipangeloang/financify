@@ -3,33 +3,38 @@ export const typeDefs = `#graphql
         id: ID!
         name: String!
         email: String! 
-        role: String!
-        # subjects: [Subject!] #Have a separate resolver for nested querying
-        # tasks: [Task!] #Have a separate resolver for nested querying
+        categories: [Category!] #Have a separate resolver for nested querying
+        subcategories: [Subcategory!] #Have a separate resolver for nested querying
     }
     type Category {
         id: ID!
         name: String!
-        # year: String!
-        # semester: String!
-        # tasks: [Task!] #Have a separate resolver for nested querying
-        # userId: ID! #Each subject has a corresponding creator user
+        type: String! #Expenses-Income
+        subcategories: [Subcategory!] #Have a separate resolver for nested querying
+        userId: ID! #Each category has a corresponding creator user
     }
-    type Product {
+    type Subcategory {
         id: ID!
         name: String!
-        price: String!
-        quantity: String!
-        image: String!
-        categoryId: ID! #Each product is directly under an individual category
+        type: String! #Expenses-Income
+        categoryId: ID! #Each subcategory has a corresponding category
+        userId: ID! #Each category has a corresponding creator user
     }
-    type Customer {
+    type Account {
         id: ID!
         name: String!
-        address: String!
-        email: String!
-        contact: String!
+        amount: String!
+        type: String! #Normal-Savings
+        userId: ID! #Each category has a corresponding creator user
     }
+    type Debt {
+        id: ID!
+        name: String!
+        amount: String!
+        type: String! #Normal-Savings
+        userId: ID! #Each category has a corresponding creator user
+    }
+    
     type Query {
         users: [User]
         user(id: ID!): User
