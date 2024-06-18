@@ -5,6 +5,9 @@ export const typeDefs = `#graphql
         email: String! 
         categories: [Category!] #Have a separate resolver for nested querying
         subcategories: [Subcategory!] #Have a separate resolver for nested querying
+        transactions: [Transaction!] #Have a separate resolver for nested querying
+        accounts: [Account!] #Have a separate resolver for nested querying
+        debts: [Debt!] #Have a separate resolver for nested querying
     }
     type Category {
         id: ID!
@@ -20,6 +23,15 @@ export const typeDefs = `#graphql
         categoryId: ID! #Each subcategory has a corresponding category
         userId: ID! #Each category has a corresponding creator user
     }
+    type Transaction {
+        id: ID!
+        category: String!
+        account: String!
+        date: String!
+        amount: String!
+        type: String! #Expenses-Income
+        userId: ID! #Each category has a corresponding creator user
+    }
     type Account {
         id: ID!
         name: String!
@@ -31,17 +43,23 @@ export const typeDefs = `#graphql
         id: ID!
         name: String!
         amount: String!
-        type: String! #Normal-Savings
+        paid: Boolean!
         userId: ID! #Each category has a corresponding creator user
     }
     
     type Query {
         users: [User]
         user(id: ID!): User
-        subjects: [Subject]
-        subject(id: ID!): Subject
-        tasks: [Task]
-        task(id: ID!): Task
+        categories: [Category]
+        category(id: ID!): Category
+        subcategories: [Subcategory]
+        subcategory(id: ID!): Subcategory
+        transactions: [Transaction]
+        transaction(id: ID!): Transaction
+        accounts: [Account]
+        account(id: ID!): Account
+        debts: [Debt]
+        debt(id: ID!): Debt
     }
     type Mutation {
         addUser(user: AddUserInput!): User
