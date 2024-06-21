@@ -21,7 +21,7 @@ export const typeDefs = `#graphql
         name: String!
         type: String! #Expenses-Income
         categoryId: ID! #Each subcategory has a corresponding category
-        userId: ID! #Each category has a corresponding creator user
+        userId: ID! #Each subcategory has a corresponding creator user
     }
     type Transaction {
         id: ID!
@@ -30,21 +30,21 @@ export const typeDefs = `#graphql
         date: String!
         amount: String!
         type: String! #Expenses-Income
-        userId: ID! #Each category has a corresponding creator user
+        userId: ID! #Each transaction has a corresponding creator user
     }
     type Account {
         id: ID!
         name: String!
         amount: String!
         type: String! #Normal-Savings
-        userId: ID! #Each category has a corresponding creator user
+        userId: ID! #Each account has a corresponding creator user
     }
     type Debt {
         id: ID!
         name: String!
         amount: String!
         paid: Boolean!
-        userId: ID! #Each category has a corresponding creator user
+        userId: ID! #Each debt has a corresponding creator user
     }
     
     type Query {
@@ -65,58 +65,100 @@ export const typeDefs = `#graphql
         addUser(user: AddUserInput!): User
         deleteUser(id: ID!): User
         updateUser(id: ID!, edits: EditUserInput!): User
-        addSubject(subject: AddSubjectInput!): Subject
-        deleteSubject(id: ID!): Subject
-        updateSubject(id: ID!, edits: EditSubjectInput!): Subject
-        addTask(task: AddTaskInput!): Task
-        deleteTask(id: ID!): Task
-        updateTask(id: ID!, edits: EditTaskInput!): Task
+        addCategory(category: AddCategoryInput!): Category
+        deleteCategory(id: ID!): Category
+        updateCategory(id: ID!, edits: EditCategoryInput!): Category
+        addSubcategory(subcategory: AddSubcategoryInput!): Subcategory
+        deleteSubcategory(id: ID!): Subcategory
+        updateSubcategory(id: ID!, edits: EditSubcategoryInput!): Subcategory
+        addTransaction(transaction: AddTransactionInput!): Transaction
+        deleteTransaction(id: ID!): Transaction
+        updateTransaction(id: ID!, edits: EditTransactionInput!): Transaction
+        addAccount(account: AddAccountInput!): Account
+        deleteAccount(id: ID!): Account
+        updateAccount(id: ID!, edits: EditAccountInput!): Account
+        addDebt(debt: AddDebtInput!): Debt
+        deleteDebt(id: ID!): Debt
+        updateDebt(id: ID!, edit: EditDebtInput!): Debt
     }
 
     # Input Types
+    # Adds
     input AddUserInput {
         name: String!
         email: String!
     }
 
+    input AddCategoryInput {
+        name: String!
+        type: String!
+        userId: String!
+    }
+    input AddSubcategoryInput {
+        name: String!
+        type: String!
+        userId: String!
+        categoryId: String!
+    }
+    input AddTransactionInput {
+        category: String!
+        account: String!
+        date: String!
+        amount: String!
+        type: String!
+        userId: String! 
+    }
+    input AddAccountInput {
+        name: String!
+        amount: String!
+        type: String! 
+        userId: String!
+    }
+    input AddDebtInput {
+        name: String!
+        amount: String!
+        paid: Boolean!
+        userId: String!
+    }
+
+    # Edits
     input EditUserInput {
         name: String
         email: String
     }
 
-    input AddSubjectInput {
-       subject: String!
-       year: String!
-       semester: String!
-       userId:  String!
+    input EditCategoryInput {
+        name: String
+        type: String
+        userId: String
+    }
+    input EditSubcategoryInput {
+        name: String
+        type: String
+        userId: String
+        categoryId: String
+    }
+    input EditTransactionInput {
+        category: String
+        account: String
+        date: String
+        amount: String
+        type: String
+        userId: String
+    }
+    input EditAccountInput {
+        name: String
+        amount: String
+        type: String
+        userId: String
+    }
+    input EditDebtInput {
+        name: String
+        amount: String
+        paid: Boolean
+        userId: String
     }
 
-    input EditSubjectInput {
-       subject: String
-       year: String
-       semester: String
-       userId:  String!
-    }
-
-    input AddTaskInput {
-        task: String!
-        description: String!
-        isPriority: Boolean
-        isPassed: Boolean
-        deadline: String!
-        userId:  String!
-        subjectId: String!
-    }
-
-    input EditTaskInput {
-        task: String
-        description: String
-        isPriority: Boolean
-        isPassed: Boolean
-        deadline: String
-        userId:  String!
-        subjectId: String!
-    }
 `;
 
 // No Password Login System

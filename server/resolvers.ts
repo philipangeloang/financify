@@ -12,21 +12,51 @@ export const resolvers = {
         },
       });
     },
-    async subjects(_parent: any, _args: any, context: Context) {
-      return await context.prisma.subject.findMany();
+    async categories(_parent: any, _args: any, context: Context) {
+      return await context.prisma.category.findMany();
     },
-    async subject(_parent: any, args: any, context: Context) {
-      return await context.prisma.subject.findFirst({
+    async category(_parent: any, args: any, context: Context) {
+      return await context.prisma.category.findFirst({
         where: {
           id: args.id,
         },
       });
     },
-    async tasks(_parent: any, _args: any, context: Context) {
-      return await context.prisma.task.findMany();
+    async subcategories(_parent: any, _args: any, context: Context) {
+      return await context.prisma.subcategory.findMany();
     },
-    async task(_parent: any, args: any, context: Context) {
-      return await context.prisma.task.findFirst({
+    async subcategory(_parent: any, args: any, context: Context) {
+      return await context.prisma.subcategory.findFirst({
+        where: {
+          id: args.id,
+        },
+      });
+    },
+    async transactions(_parent: any, _args: any, context: Context) {
+      return await context.prisma.transaction.findMany();
+    },
+    async transaction(_parent: any, args: any, context: Context) {
+      return await context.prisma.transaction.findFirst({
+        where: {
+          id: args.id,
+        },
+      });
+    },
+    async accounts(_parent: any, _args: any, context: Context) {
+      return await context.prisma.account.findMany();
+    },
+    async account(_parent: any, args: any, context: Context) {
+      return await context.prisma.account.findFirst({
+        where: {
+          id: args.id,
+        },
+      });
+    },
+    async debts(_parent: any, _args: any, context: Context) {
+      return await context.prisma.debt.findMany();
+    },
+    async debt(_parent: any, args: any, context: Context) {
+      return await context.prisma.debt.findFirst({
         where: {
           id: args.id,
         },
@@ -35,27 +65,48 @@ export const resolvers = {
   },
   User: {
     //The separate resolver for nested querying
-    async subjects(parent: any, _args: any, context: Context) {
-      return await context.prisma.subject.findMany({
+    async categories(parent: any, _args: any, context: Context) {
+      return await context.prisma.category.findMany({
         where: {
           userId: parent.id,
         },
       });
     },
-    async tasks(parent: any, _args: any, context: Context) {
-      return await context.prisma.task.findMany({
+    async subcategories(parent: any, _args: any, context: Context) {
+      return await context.prisma.subcategory.findMany({
+        where: {
+          userId: parent.id,
+        },
+      });
+    },
+    async transactions(parent: any, _args: any, context: Context) {
+      return await context.prisma.transaction.findMany({
+        where: {
+          userId: parent.id,
+        },
+      });
+    },
+    async accounts(parent: any, _args: any, context: Context) {
+      return await context.prisma.account.findMany({
+        where: {
+          userId: parent.id,
+        },
+      });
+    },
+    async debts(parent: any, _args: any, context: Context) {
+      return await context.prisma.debt.findMany({
         where: {
           userId: parent.id,
         },
       });
     },
   },
-  Subject: {
+  Category: {
     //The separate resolver for nested querying
-    async tasks(parent: any, _args: any, context: Context) {
-      return await context.prisma.task.findMany({
+    async subcategories(parent: any, _args: any, context: Context) {
+      return await context.prisma.subcategory.findMany({
         where: {
-          subjectId: parent.id,
+          categoryId: parent.id,
         },
       });
     },
@@ -95,22 +146,22 @@ export const resolvers = {
         },
       });
     },
-    async addSubject(_parent: any, args: any, context: Context) {
-      return await context.prisma.subject.create({
+    async addCategory(_parent: any, args: any, context: Context) {
+      return await context.prisma.category.create({
         data: {
-          ...args.subject,
+          ...args.category,
         },
       });
     },
-    async deleteSubject(_parent: any, args: any, context: Context) {
-      return await context.prisma.subject.delete({
+    async deleteCategory(_parent: any, args: any, context: Context) {
+      return await context.prisma.category.delete({
         where: {
           id: args.id,
         },
       });
     },
-    async updateSubject(_parent: any, args: any, context: Context) {
-      return await context.prisma.subject.update({
+    async updateCategory(_parent: any, args: any, context: Context) {
+      return await context.prisma.category.update({
         where: {
           id: args.id,
         },
@@ -119,22 +170,94 @@ export const resolvers = {
         },
       });
     },
-    async addTask(_parent: any, args: any, context: Context) {
-      return await context.prisma.task.create({
+    async addSubcategory(_parent: any, args: any, context: Context) {
+      return await context.prisma.subcategory.create({
         data: {
-          ...args.task,
+          ...args.subcategory,
         },
       });
     },
-    async deleteTask(_parent: any, args: any, context: Context) {
-      return await context.prisma.task.delete({
+    async deleteSubcategory(_parent: any, args: any, context: Context) {
+      return await context.prisma.subcategory.delete({
         where: {
           id: args.id,
         },
       });
     },
-    async updateTask(_parent: any, args: any, context: Context) {
-      return await context.prisma.task.update({
+    async updateSubcategory(_parent: any, args: any, context: Context) {
+      return await context.prisma.subcategory.update({
+        where: {
+          id: args.id,
+        },
+        data: {
+          ...args.edits,
+        },
+      });
+    },
+    async addTransaction(_parent: any, args: any, context: Context) {
+      return await context.prisma.transaction.create({
+        data: {
+          ...args.transaction,
+        },
+      });
+    },
+    async deleteTransaction(_parent: any, args: any, context: Context) {
+      return await context.prisma.transaction.delete({
+        where: {
+          id: args.id,
+        },
+      });
+    },
+    async updateTransaction(_parent: any, args: any, context: Context) {
+      return await context.prisma.transaction.update({
+        where: {
+          id: args.id,
+        },
+        data: {
+          ...args.edits,
+        },
+      });
+    },
+    async addAccount(_parent: any, args: any, context: Context) {
+      return await context.prisma.account.create({
+        data: {
+          ...args.account,
+        },
+      });
+    },
+    async deleteAccount(_parent: any, args: any, context: Context) {
+      return await context.prisma.account.delete({
+        where: {
+          id: args.id,
+        },
+      });
+    },
+    async updateAccount(_parent: any, args: any, context: Context) {
+      return await context.prisma.account.update({
+        where: {
+          id: args.id,
+        },
+        data: {
+          ...args.edits,
+        },
+      });
+    },
+    async addDebt(_parent: any, args: any, context: Context) {
+      return await context.prisma.debt.create({
+        data: {
+          ...args.debt,
+        },
+      });
+    },
+    async deleteDebt(_parent: any, args: any, context: Context) {
+      return await context.prisma.debt.delete({
+        where: {
+          id: args.id,
+        },
+      });
+    },
+    async updateDebt(_parent: any, args: any, context: Context) {
+      return await context.prisma.debt.update({
         where: {
           id: args.id,
         },

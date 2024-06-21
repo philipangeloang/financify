@@ -12,3 +12,62 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String        @unique
+  categories    Category[]
+  subcategories Subcategory[]
+  transactions  Transaction[]
+  accounts      Account[]
+  debt          Debt[]
+}
+
+model Category {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  type          String
+  user          User          @relation(fields: [userId], references: [id])
+  userId        String        @db.ObjectId
+  subcategories Subcategory[]
+}
+
+model Subcategory {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  type       String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.ObjectId
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String   @db.ObjectId
+}
+
+model Transaction {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  category String
+  account  String
+  date     String
+  amount   String
+  type     String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String @db.ObjectId
+}
+
+model Account {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  type   String
+  amount String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+}
+
+model Debt {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  amount String
+  paid   Boolean
+  user   User    @relation(fields: [userId], references: [id])
+  userId String  @db.ObjectId
+}
