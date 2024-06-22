@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Manage your finances with finesse",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

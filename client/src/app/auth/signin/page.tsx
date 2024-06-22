@@ -1,8 +1,3 @@
-// React Icons Imports
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
-// ShadCn Imports
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,6 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
+import GoogleSignIn from "@/components/googleSigninButton";
+import GithubSignIn from "@/components/githubSigninButton";
 
 export default function Home() {
   return (
@@ -31,12 +28,8 @@ export default function Home() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex gap-5 w-full justify-center">
-          <Button className="transition-all ease-in-out delay-75 peer hover:w-4/5 w-1/2 bg-main-black h-8">
-            <FcGoogle size={15} />
-          </Button>
-          <Button className="transition-all ease-in-out delay-75 peer-hover:w-2/5 hover:w-full w-1/2 bg-main-black h-8">
-            <FaGithub color="white" size={15} />
-          </Button>
+          <GoogleSignIn />
+          <GithubSignIn />
         </CardContent>
         <CardFooter className="text-xs text-center font-bold">
           Passwordless login for seamless experience
