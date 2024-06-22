@@ -1,7 +1,9 @@
-export default function Home() {
+const Dashboard = () => {
   return (
     <main className="w-screen h-screen bg-main-black text-main-white flex justify-center items-center">
-      <p>Root Home Page</p>
+      <p>Dashboard Page</p>
     </main>
   );
-}
+};
+
+export default Dashboard;
