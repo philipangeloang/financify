@@ -12,6 +12,22 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/auth/signin"
   },
+  callbacks: {
+    async session({session}) {
+      console.log(session)
+      return session
+    },
+    async signIn({profile , user, account}) {
+      // console.log(profile)
+      // console.log(user)
+      // console.log(account)
+      try {
+        return true
+      } catch (error) {
+        return false
+      }
+    }
+  },
   providers: [GitHub, Google],
 })
 
